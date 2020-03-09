@@ -15,11 +15,15 @@ const count = way => {
         else {
             down = down+1;
         }
-       
+        total = up-down;
+        if (total === -1) {
+            return i+1
+        }   
     }
     total = up-down;
     return total;
 }
 
 console.log(count(input));
+
 
