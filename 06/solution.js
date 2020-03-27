@@ -38,11 +38,14 @@ instructionsArray = tablemaker(instructions.length,5,'');
 for (let i = 0; i < instructions.length; i++) {
     let coordinates = instructions[i].match(/\d+/g);
     instructionsArray[i][0] = getaction(instructions[i]);
-    instructionsArray[i][1] = coordinates[0];
-    instructionsArray[i][2] = coordinates[1];
-    instructionsArray[i][3] = coordinates[2];
-    instructionsArray[i][4] = coordinates[3];
-
+    // instructionsArray[i][1] = coordinates[0];
+    // instructionsArray[i][2] = coordinates[1];
+    // instructionsArray[i][3] = coordinates[2];
+    // instructionsArray[i][4] = coordinates[3];
+    instructionsArray[i][1] = parseInt(coordinates[0]);
+    instructionsArray[i][2] = parseInt(coordinates[1]);
+    instructionsArray[i][3] = parseInt(coordinates[2]);
+    instructionsArray[i][4] = parseInt(coordinates[3]);
     //1 line equivalent
     // cmdArray.push([getaction(instructions[i]), coordinates[0], coordinates[1], coordinates[2], coordinates[3]]);
 }
@@ -54,13 +57,34 @@ const lightitup = (instruction, l, t, r, b) => {
         for (let j = t; j <= b; j++) {
             switch (instruction) {
                 case 'turn on':
-                    grid[i][j] = 1;
+                    //Part 1
+                    // grid[i][j] = 1;
+
+                    //Part 2
+                    grid[i][j] = grid[i][j] + 1
                     break;
                 case 'turn off':
-                    grid[i][j] = 0;
+                    //Part 1
+                    // grid[i][j] = 0;
+
+                    //Part 2
+                    switch (grid[i][j]) {
+                        case 0:
+                            grid[i][j] = 0;
+                            break;
+                    
+                        default:
+                            grid[i][j] = grid[i][j] - 1;
+                            break;
+                    }
+                    
                     break;
                 default:
-                    grid[i][j] = 1 - grid[i][j];
+                    // Part 1
+                    //grid[i][j] = 1 - grid[i][j];
+
+                    // Part 2
+                    grid[i][j] = grid[i][j] + 2;
                     break;
                 }
             }
@@ -78,14 +102,21 @@ const count = Arr => {
     for (let i = 0; i < Arr.length; i++) {
         for (let j = 0; j<Arr.length; j++) {
             if (Arr[i][j]>0) {
-                counter = counter + 1;
+                //Part 1
+                //counter = counter + 1;
+                
+                //Part 2
+                counter = counter + Arr[i][j];
             }
         }     
     }
     return counter;
 }
 
+const result = grid.reduce((total, light) => light === 0 ? total : ++total, 0);
+
 console.log(count(grid));
+// console.log(result);
 // console.table(instructionsArray);
 // /\d+/g
 // console.table(lightgrid(0));
