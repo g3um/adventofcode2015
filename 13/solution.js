@@ -39,7 +39,7 @@ const parseInput = instruction => {
             console.log(err);
             break;
     }
-    arrayInput[3] = instruction.substring(instruction.indexOf('would')+6,instruction.indexOf('would')+10);
+    arrayInput[3] = instruction.substring(instruction.indexOf('would')+6,instruction.indexOf('would')+10); //Control column to see if number has right sign
     return arrayInput;
  }
 
@@ -48,9 +48,9 @@ instructionsArray = tablemaker(instructions.length,4,'');
     for (let i = 0; i < instructions.length; i++) {
         instructionsArray[i] = parseInput(instructions[i]);
     }
+// console.table(instructionsArray);
 
-console.table(instructionsArray);
-//List of name (unique)
+//List of names (unique)
 const namesAll = array =>{
     let result = [];
     for (let i = 0; i < array.length; i++) {
@@ -61,6 +61,7 @@ const namesAll = array =>{
 };
 const names = [...new Set(namesAll(instructionsArray).map(instruction => instruction))];
 // console.log(names);
+
 //Part 2 - New instructions
 const addGuest = (instructionsArray,names, string) => {
     for (let i = 0; i < names.length; i++) {
@@ -72,7 +73,7 @@ const addGuest = (instructionsArray,names, string) => {
 }
 addGuest(instructionsArray,names,'Host');
 
-console.table(instructionsArray);
+
 //Permutation, credit to "Delimited" user on stackoverflow for an elegant & concise alternative to something I had many lines of code for
 const permutator = (inputArr) => {
     let result = [];
@@ -135,27 +136,26 @@ const maximum = (arrayOfarrays) => {
 }
 
 
-const calculator = arrayOfseatings => {
-   
+const calculator = arrayOfseatings => {   
     for (let i = 0; i < arrayOfseatings.length; i++) {
         let total =0;
         for (let j = 0; j < arrayOfseatings[i].length ; j++) {
             switch (j) {
                 case arrayOfseatings[i].length-1:
-                    CurrValue = arrayOfseatings[i][j]; // Current city in current trip (line)
-                    ArraysWithCurrValue =  checkValue(instructionsArray , CurrValue); //Look for all arrays with the current city in input
-                    CurrPair = [arrayOfseatings[i][j] , arrayOfseatings[i][0]]; //creates array of current city & next city
+                    CurrValue = arrayOfseatings[i][j]; // Current name/seat in current seating/table (line)
+                    ArraysWithCurrValue =  checkValue(instructionsArray , CurrValue); //Look for all arrays with the current name in input
+                    CurrPair = [arrayOfseatings[i][j] , arrayOfseatings[i][0]]; //creates array of current name & first name (toclose the loop/table)
                     break;
             
                 default:
-                    CurrValue = arrayOfseatings[i][j]; // Current city in current trip (line)
-                    ArraysWithCurrValue =  checkValue(instructionsArray , CurrValue); //Look for all arrays with the current city in input
-                    CurrPair = [arrayOfseatings[i][j] , arrayOfseatings[i][j+1]]; //creates array of current city & next city
+                    CurrValue = arrayOfseatings[i][j]; // Current name/seat in current seating/table (line)
+                    ArraysWithCurrValue =  checkValue(instructionsArray , CurrValue); //Look for all arrays with the current name in input
+                    CurrPair = [arrayOfseatings[i][j] , arrayOfseatings[i][j+1]]; //creates array of current name & next name
                     break;
             }
 
             let score =0;
-            for (let k = 0; k < ArraysWithCurrValue.length; k++) { // check all the arrays with current city and find the array with next city
+            for (let k = 0; k < ArraysWithCurrValue.length; k++) { // check all the arrays with current name and find the array with next name
                 testArray = [ ArraysWithCurrValue[k][0] , ArraysWithCurrValue[k][2] ];
                 testArray2 = [ ArraysWithCurrValue[k][2] , ArraysWithCurrValue[k][0] ];
                 if (areArraysEqual(CurrPair,testArray) || areArraysEqual(CurrPair , testArray2)) { //
@@ -169,7 +169,6 @@ const calculator = arrayOfseatings => {
         arrayOfseatings[i].push(total);
     }
     // console.table(arrayOfseatings);
-    // console.log('minimum:');console.log(minimum(arrayOftrips));
     console.log('maximum:');console.log(maximum(arrayOfseatings));
 }
 
