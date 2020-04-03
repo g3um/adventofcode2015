@@ -24,7 +24,7 @@ const instructions = input.split('\r\n');
 
 //parse input (3 data point)
 const parseInput = instruction => {
-    arrayInput =["","","",""];
+    arrayInput =["","",""];
     arrayInput[0] = instruction.substring(0,instruction.indexOf(' would'));
     arrayInput[2] = instruction.substring(instruction.indexOf('to ')+3,instruction.length-1);
     let effect = instruction.substring(instruction.indexOf('would')+6,instruction.indexOf('would')+10);
@@ -39,7 +39,6 @@ const parseInput = instruction => {
             console.log(err);
             break;
     }
-    arrayInput[3] = instruction.substring(instruction.indexOf('would')+6,instruction.indexOf('would')+10); //Control column to see if number has right sign
     return arrayInput;
  }
 
@@ -65,8 +64,8 @@ const names = [...new Set(namesAll(instructionsArray).map(instruction => instruc
 //Part 2 - New instructions
 const addGuest = (instructionsArray,names, string) => {
     for (let i = 0; i < names.length; i++) {
-        instructionsArray.push([string,0,names[i],'gain']);
-        instructionsArray.push([names[i],0,string,'gain']);
+        instructionsArray.push([string,0,names[i]]);
+        instructionsArray.push([names[i],0,string]);
     }
     names.push(string);
     
